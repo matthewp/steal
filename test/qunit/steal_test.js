@@ -1,3 +1,17 @@
+steal.config({
+  map: {
+    "*": {
+      "jquery/jquery.js": "jquery"
+    }
+  },
+  paths: {
+    jquery: "steal/test/qunit/jquery-1.9.1.js"
+  },
+  shim: {
+    jquery: { exports: "jQuery" }
+  }
+});
+
 steal('jquery').then(function(){
 
 module("steal")
@@ -76,7 +90,7 @@ test("loading plugin from jmvcroot", function(){
 test("not using extension", function(){
 	REQUIRED = false;
 	stop();
-	steal.config({root: "../../"})
+	steal.config({root: "../../../"})
 	steal('./files/require',function(){
 		equals(REQUIRED, true);
 		start();
@@ -96,7 +110,7 @@ test("loading file from jmvcroot", function(){
 test("loading two files", function(){
 	ORDER = [];
 	stop();
-	steal.config({root: "../../"})
+	steal.config({root: "../../../"})
 	steal('./files/file1.js',function(){
 		same(ORDER,[1,2,"then2","then1"])
 		start();
@@ -106,7 +120,7 @@ test("loading two files", function(){
 test("steal one file with different URI.root", function(){
 	// doesn't this imply the next ...
 
-	steal.config({root: "../"})
+	steal.config({root: "../../../"})
 	REQUIRED = undefined;
 	stop();
 
@@ -120,7 +134,7 @@ test("steal one file with different URI.root", function(){
 test("loading same file twice", function(){
 	ORDER = [];
 	stop();
-	steal.config({root: "../../"})
+	steal.config({root: "../../../"})
 	steal('./files/duplicate.js', './files/duplicate.js',function(){
 		same(ORDER,[1])
 		start();
@@ -130,7 +144,7 @@ test("loading same file twice", function(){
 test("loading same file twice with absolute paths", function(){
 	ORDER = [];
 	stop();
-	steal.config({root: "../../"})
+	steal.config({root: "../../../"})
 	steal('./files/loadDuplicate.js').then('//steal/test/files/duplicate.js',function(){
 		same(ORDER,[1])
 		start();
@@ -485,7 +499,7 @@ test("filename", function(){
 				}
 
 
-				test.startFile = expectedStartFile;
+				test.startId = expectedStartFile;
 				test.env = env;
 
 				srcs.push( test );
@@ -496,7 +510,7 @@ test("filename", function(){
 						srcs.push({
 							src : [stealType, [startFile, mode ].join() ].join("?"),
 							rootUrl: undefined,
-							startFile : expectedStartFile,
+							startId : expectedStartFile,
 							env : mode || env
 						});
 					}
@@ -517,7 +531,7 @@ test("filename", function(){
 
 			options = steal.getScriptOptions( script );
 
-			equals( options.startFile, src.startFile, "Correct startFile on " + src.src );
+			equals( options.startId, src.startId, "Correct startFile on " + src.src );
 			equals( options.env, src.env, "Correct environment on " + src.src );
 
 		});
@@ -694,10 +708,6 @@ test("modules", function(){
 	
 });
 
-test("inline steals work with needs and shims", 2, function(){
-	stop();
-	$('body').append('<iframe src="inline_steals/inline_steals.html"></iframe>')
-})
 asyncTest("load 32 stylesheets", 2, function() {
 	steal.config({root: orig})
 	function normalizeColor( color ) {

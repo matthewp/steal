@@ -1,6 +1,6 @@
-steal('funcunit/qunit','stealjs/less').then('./less.less')
+steal('funcunit/qunit','steal/less').then('./less.less')
 .then(function(){
-	module("stealjs/less",{
+	module("steal/less",{
 		setup : function(){
 			
 		}
