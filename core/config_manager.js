@@ -229,6 +229,7 @@ h.extend(ConfigManager.prototype, {
 			this.stealConfig.root = root;
 			return this;
 		}
+
 		this.stealConfig.root =  root || URI("");
 	},
 	cloneContext: function(){

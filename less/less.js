@@ -1,5 +1,4 @@
 steal({id: "./less_engine.js",ignore: true},function(){
-
     /**
      * @page steal.less steal.less
      * @parent stealjs
